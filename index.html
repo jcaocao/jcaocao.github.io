@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="nadalcss.css"  />
+  	<embed src="cancion.mp3" autostart="true" loop="true"
+		width="2" height="0"> 
+		</embed>
+    <style>
+      body {
+        
+      }
+    </style>
+  </head>
+  <body>
+  	<audio id="sonido">
+	  <source src="hohoho.mp3" type="audio/mpeg">  
+	</audio>
+    <div id="container"></div>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.4.min.js"></script>
+    <script defer="defer">
+      var primer = true;
+      var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 900,
+        height: 563
+      });
+
+      var layer = new Kinetic.Layer();
+
+      var imageObj = new Image();
+	  
+	  
+	  var bonnadalText;
+
+      function playSound() {
+	 	var sonido=document.getElementById("sonido");
+	 	sonido.play();
+	 }
+
+      
+
+      imageObj.onload = function() {
+      	if(primer==true)
+      	{
+      		primer = false;
+	        var reno = new Kinetic.Image({
+	          x: 0,
+	          y: 0,
+	          image: imageObj,
+	          width: 500,
+          	  height: 262
+          	 
+	        });
+			 reno.on('mouseover', function() {
+         		 writeMessage('Hou, Hou, Hou');
+
+       		 });
+       		 reno.on('mouseover', function() {
+         		 playSound();
+
+       		 });
+       		 
+       		 reno.on('mouseout', function() {
+	          writeMessage('');
+	        });
+   			 var text = new Kinetic.Text({
+		        x: 10,
+		        y: 10,
+		        fontFamily: 'Arial',
+		        fontSize: 24,
+		        text: '',
+		        fill: 'white'
+		      });
+			function writeMessage(message) {
+				text.setText(message);
+			    layer.draw();
+					      }
+
+
+			bonnadalText = new Kinetic.Text({
+	        x: stage.getWidth() / 2,
+	        y: 150,
+	        text: '        DAW2A \n       Us Desitja      ',
+	        fontSize: 70,
+	        fontFamily: 'fuenteNavidad',
+	        fill: 'white',
+	        scale:0
+	      });
+			var periode = 2000;
+			var animtext= new Kinetic.Animation(function(frame){
+			var scale = Math.sin(frame.time *4 / period)+0.001;
+				bonnadalText.setScale(scale);
+				if(scale>=1)
+					{
+					 animtext.stop();
+					}
+			},layer); 
+			
+
+	      // to align text in the middle of the screen, we can set the
+	      // shape offset to the center of the text shape after instantiating it
+	      bonnadalText.setOffset({
+	        x: bonnadalText.getWidth() / 2
+	      });
+
+/*--------------------------Creacion Estrellas-----------------------*/
+			 var estrellitas = new Array();
+		      for (var i =0, pos_x=100, pos_y=50; i < 30; i++) {
+		        pos_x=Math.round(Math.random()*900+0);
+		        pos_y=Math.round(Math.random()*(250 + 0)+0);
+		        estrellitas[i] = new Kinetic.Star({
+		          x: pos_x,
+		          y: pos_y,
+		       
+		        numPoints: Math.floor((Math.random()*6)+5),
+		        innerRadius: 1,
+		        outerRadius: 8,
+		        fill: 'yellow'
+		         });
+		        
+		        	
+		        		layer.add(estrellitas[i]);
+		        	
+
+		      
+		         };
+
+		         /*--------------------------Animacion Estrellas-----------------------*/
+		      
+				var animEstrellas = new Kinetic.Animation(function(frame) {
+		        for (var i = 0; i < 30; i++) {
+		        var scale = Math.sin(frame.time * 2 * Math.PI / period) + 2;
+		        // scale x and y
+		        
+		        	estrellitas[i].setScale(scale*0.4);
+		        }
+		        
+		        
+		      }, layer);
+		        
+		      
+				
+		      animEstrellas.start();
+
+
+	        // add the shape to the layer
+	        layer.add(text);
+	        layer.add(reno);
+	        
+	        // add the layer to the stage
+	        stage.add(layer);
+			
+	        
+	          var amplitude = 750;
+		      var period = 8000;
+		      // in ms
+		      var centerX = stage.getWidth() / 3;
+
+		      var anim = new Kinetic.Animation(function(frame) {
+		      	if( Math.sin(frame.time * 2 * Math.PI / period) > 0.98)
+		      	{
+		      		imageObj.src = 'siluetas2.png';
+		      		if(reno.getWidth()==500)
+		      		{
+		      		reno.setWidth(400);
+		      		reno.setHeight(210);
+		      		layer.add(bonnadalText);
+		      		animtext.start();
+		      		
+		      		}
+		      		if(reno.getWidth()==350)
+		      		{
+		      		reno.setWidth(275);
+		      		reno.setHeight(145);
+		      		reno.setY(70);
+		      		bonnadalText.setText(" Que De Casa Vostra \n   No Passi De Llarg");
+		      		}
+		      		if(reno.getWidth()==180)
+		      		{
+		      		reno.setWidth(100);
+		      		reno.setHeight(45);
+		      		reno.setY(150);
+		      		bonnadalText.setFontSize(120);
+		      		bonnadalText.setText(" Bon Nadal...");
+		      		bonnadalText.setScale(0);
+		      		animtext.start();
+		      		}
+		      		
+		      	}
+		      	if ( Math.sin(frame.time * 2 * Math.PI / period) <-0.98)
+		      	{
+		      		imageObj.src = 'siluetasres.png';
+		      		
+		      		if(reno.getWidth()==400)
+		      		{
+		      		reno.setWidth(350);
+		      		reno.setHeight(177);
+		      		
+		      		}
+		      		if(reno.getWidth()==275)
+		      		{
+		      		reno.setWidth(180);
+		      		reno.setHeight(90);
+		      		reno.setY(100);
+		      		
+		      		}
+		      		if(reno.getWidth()==100)
+		      		{
+		      			bonnadalText.setText(" i Millor 2014!");
+		      			reno.setY(220);
+		      			
+		      		}
+		      		
+
+		      	}
+		        reno.setX(amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX);
+		        var posicion_x = amplitude * Math.sin(frame.time * 2 * Math.PI / period) + centerX;
+		       if (posicion_x=450){
+		       	//animregalos();
+		       }
+		      }, layer);
+
+		      anim.start();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+
+      };
+		
+      imageObj.src = 'siluetasres.png';
+      //regalo.src = 'regalo.png';
+    </script>
+  </body>
+</html>
+
+	  

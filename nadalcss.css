@@ -1,0 +1,22 @@
+#container{
+	width: 900px;
+    height: 563px;
+	background-image: url("fondo3.jpg");
+	background-repeat:no-repeat;
+	margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    border: solid 1px red;
+}   
+@font-face{
+	font-family: fuenteNavidad;
+	src:url(christmaseve.ttf);		
+}
+body{
+
+	background-image:url("fondo4.jpg");
+	background-repeat:repeat;
+	background-size: 218px; 
+	font: bold 50px fuenteNavidad, Verdana;
+}
+
